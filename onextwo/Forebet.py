@@ -12,13 +12,10 @@ class Forebet:
     # game format is League|Date|Hour|Home Team|Away Team|Prob Home|Prob Tie| Prob Away
     def get_games_and_odds(self):
         results = list()
-
         for link in Dict1X2.links:
             response = requests.get(link)
             soup = BeautifulSoup(response.text, 'html.parser')
-
             games = soup.findAll(class_='rcnt tr_0') + soup.findAll(class_='rcnt tr_1')
-
             for game in games:
                 try:
                     if Dict1X2.leagues.__contains__(game.find(class_='shortTag').text.strip()):
@@ -55,10 +52,10 @@ class Forebet:
                     game.result="2"
                 else:
                     game.result="X"
-            if game.result == game.bet:
-                game.won="1"
-            else:
-                game.won="0"
+                if game.result == game.bet:
+                    game.won="1"
+                else:
+                    game.won="0"
             if game.result is not None:
                 results.append(game)
         return results

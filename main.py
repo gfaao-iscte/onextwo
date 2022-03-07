@@ -83,8 +83,8 @@ def getGamesAndOdds():
                     game.set538odds(game_fte[3], game_fte[4], game_fte[5], game_fte[6], game_fte[7], game_fte[8])
                     game.setOddsAndBet()
                     results_fte.pop(i)
-                    if (int(game.betOddP) > 49) and (int(game.i538rating) > 40):
-                        print(game.gameToString())
+                    if (int(game.betOddP) > 44) and (int(game.i538rating) > 40):
+                        #print(game.gameToString())
                     results.append(game)
                     break
 
