@@ -77,6 +77,39 @@ links = {"https://www.forebet.com/en/predictions-europe/uefa-champions-league",
          "https://www.forebet.com/en/football-tips-and-predictions-for-turkey"
          }
 
+leagues_to_links={"UCL":"https://www.forebet.com/en/predictions-europe/uefa-champions-league",
+                  "EPL":"https://www.forebet.com/en/football-tips-and-predictions-for-england/premier-league",
+                  "Es1":"https://www.forebet.com/en/football-tips-and-predictions-for-spain/primera-division",
+                       "De1":"https://www.forebet.com/en/football-tips-and-predictions-for-germany/Bundesliga",
+                       "Fr1": "https://www.forebet.com/en/football-tips-and-predictions-for-france/ligue1",
+                       "It1":"https://www.forebet.com/en/football-tips-and-predictions-for-italy/serie-a",
+                       "Pt1":"https://www.forebet.com/en/football-tips-and-predictions-for-portugal-superliga/primeira-liga",
+                       "Be1":"https://www.forebet.com/en/football-tips-and-predictions-for-belgium/jupiler-pro-league",
+                       "Ch1":"https://www.forebet.com/en/football-tips-and-predictions-for-switzerland-super-league",
+                       "Nl1":"https://www.forebet.com/en/football-tips-and-predictions-for-netherlands/eredivisie",
+                       "Us1":"https://www.forebet.com/en/football-tips-and-predictions-for-usa-major-league-soccer",
+                       "Sc1":"https://www.forebet.com/en/football-tips-and-predictions-for-scotland",
+                       "Br1":"https://www.forebet.com/en/football-tips-and-predictions-for-brazil",
+                       "Dk1":"https://www.forebet.com/en/football-tips-and-predictions-for-denmark-superliga",
+                       "Mx1":"https://www.forebet.com/en/football-tips-and-predictions-for-mexico",
+                       "Tr1":"https://www.forebet.com/en/football-tips-and-predictions-for-turkey"}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 teams = {"Zenit": "Zenit",
          "Beşiktaş": "Besiktas JK",
          "Shakhtar": "Shakhtar Donetsk",

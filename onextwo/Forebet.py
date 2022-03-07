@@ -1,3 +1,5 @@
+import re
+
 import requests
 from bs4 import BeautifulSoup
 
@@ -34,4 +36,29 @@ class Forebet:
                     pass
         return results
 
+    def close_games(self,games):
+        results= list()
+        for game in games:
+            link= Dict1X2.leagues_to_links[game.league]
 
+            response = requests.get(link)
+            soup = BeautifulSoup(response.text, 'html.parser')
+
+            fb_game=soup.find(text=re.compile(game.home))
+            s=fb_game.parent.parent.parent.parent.parent.parent
+            div=fb_game.parent.parent.parent.parent.parent.parent.text
+            if div.__contains__("FT") and div.__contains__(game.home) and  div.__contains__(game.away) and  div.__contains__(game.date):
+                res=s.find(class_='l_scr').text.split(" - ")
+                if int(res[0]) > int(res[1]):
+                    game.result="1"
+                elif int(res[0]) < int(res[1]):
+                    game.result="2"
+                else:
+                    game.result="X"
+            if game.result == game.bet:
+                game.won="1"
+            else:
+                game.won="0"
+            if game.result is not None:
+                results.append(game)
+        return results
