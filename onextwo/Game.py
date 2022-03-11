@@ -38,22 +38,28 @@ class Game:
         self.i538rating = i538rating
 
     def setOddsAndBet(self):
-        self.homeOdd = str((int((float(self.homeFBodd) + float(self.home538odd)) / 2)))
-        self.drawOdd = str((int((float(self.drawFBodd) + float(self.draw538odd)) / 2)))
-        self.awayOdd = str((int((float(self.awayFBodd) + float(self.away538odd)) / 2)))
-        if (float(self.homeOdd) >= float(self.drawOdd)) and (float(self.homeOdd) >= float(self.awayOdd)):
-            self.bet = "1"
-            self.betOddP = str((int((float(self.homeFBodd) + float(self.home538odd)) / 2)))
-            self.betOdd = str(1 / (float(self.homeOdd) / 100))
-        elif (float(self.homeOdd) < float(self.drawOdd)) and (float(self.drawOdd) >= float(self.awayOdd)):
-            self.bet = "X"
-            self.betOddP = str((int((float(self.drawFBodd) + float(self.draw538odd)) / 2)))
-            self.betOdd = str(1 / (float(self.drawOdd) / 100))
-        else:
-            self.bet = "2"
-            self.betOddP = str((int((float(self.awayFBodd) + float(self.away538odd)) / 2)))
-            self.betOdd = str(1 / (float(self.awayOdd) / 100))
-        self.betOdd = str(round(float(self.betOdd), 2))
+        try:
+            self.homeOdd = str((int((float(self.homeFBodd) + float(self.home538odd)) / 2)))
+            self.drawOdd = str((int((float(self.drawFBodd) + float(self.draw538odd)) / 2)))
+            self.awayOdd = str((int((float(self.awayFBodd) + float(self.away538odd)) / 2)))
+            if (float(self.homeOdd) >= float(self.drawOdd)) and (float(self.homeOdd) >= float(self.awayOdd)):
+                self.bet = "1"
+                self.betOddP = str((int((float(self.homeFBodd) + float(self.home538odd)) / 2)))
+                self.betOdd = str(1 / (float(self.homeOdd) / 100))
+            elif (float(self.homeOdd) < float(self.drawOdd)) and (float(self.drawOdd) >= float(self.awayOdd)):
+                self.bet = "X"
+                self.betOddP = str((int((float(self.drawFBodd) + float(self.draw538odd)) / 2)))
+                self.betOdd = str(1 / (float(self.drawOdd) / 100))
+            else:
+                self.bet = "2"
+                self.betOddP = str((int((float(self.awayFBodd) + float(self.away538odd)) / 2)))
+                self.betOdd = str(1 / (float(self.awayOdd) / 100))
+            self.betOdd = str(round(float(self.betOdd), 2))
+        except:
+            print(self.home+"VS"+self.away)
+            print(self.homeFBodd)
+            print(self.awayFBodd)
+            print(self.away538odd)
 
     def gameToList(self):
         return list(self.date, self.hour, self.league, self.home, self.away,

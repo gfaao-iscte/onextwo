@@ -11,7 +11,7 @@ collection_testgames=db["test"]
 
 def doc_to_game(document):
     game=Game(document.get('home'),document.get('away'),document.get('date'),document.get('hour'),document.get('league'))
-    game.setFBodds(document.get('homeFB'),document.get('drawFB'),document.get('awayFB'))
+    game.setFBodds(document.get('homeFB'),document.get('drawFB'),document.get('awyaFB'))
     game.set538odds(document.get('home538'),document.get('draw538'),document.get('away538'),document.get('quality'),document.get('importance'),document.get('rating'))
     game.setOddsAndBet()
     return game
@@ -27,8 +27,8 @@ def main():
         if option == 1:
             print("FAZER")
         if option == 2:
-            opengames=getGamesAndOdds()
-            insertOrUpdateOpenGames(opengames)
+            testgames=getGamesAndOdds()
+            insertOrUpdatetestgames(testgames)
             closeGames()
         if option == 1:
             print("FAZER")
@@ -45,22 +45,22 @@ def menu():
 def closeGames():
     fb=Forebet()
     games=list()
-    documents=collection_opengames.find({})
+    documents=collection_testgames.find({})
     for document in documents:
         games.append(doc_to_game(document))
     results=fb.close_games(games)
     for res in results:
-        collection_opengames.update_one({"date":res.date,
-        "hour":res.hour,
-        "league":res.league,
-        "home":res.home,
-        "away":res.away},{'$set':{'result':res.result,'won':res.won}})
-        collection_closedgames.insert_one(collection_opengames.find_one({"date":res.date,
+        collection_testgames.update_one({"date":res.date,
+                                         "hour":res.hour,
+                                         "league":res.league,
+                                         "home":res.home,
+                                         "away":res.away},{'$set':{'result':res.result,'won':res.won}})
+        collection_closedgames.insert_one(collection_testgames.find_one({"date":res.date,
                                                                          "hour":res.hour,
                                                                          "league":res.league,
                                                                          "home":res.home,
                                                                          "away":res.away}))
-        collection_opengames.delete_one({"date":res.date,
+        collection_testgames.delete_one({"date":res.date,
                                          "hour":res.hour,
                                          "league":res.league,
                                          "home":res.home,
@@ -87,8 +87,8 @@ def getGamesAndOdds():
                     game.set538odds(game_fte[3], game_fte[4], game_fte[5], game_fte[6], game_fte[7], game_fte[8])
                     game.setOddsAndBet()
                     results_fte.pop(i)
-                    if (int(game.i538quality) > 38) and ((int(game.awayOdd)>32) or ((int(game.awayOdd)>17) and (int(game.awayOdd)<= 26))) :
-                        print(game.gameToString())
+                    if (int(game.betOddP) > 44) and (int(game.i538rating) > 40):
+                        #print(game.gameToString())
                         pass
                     results.append(game)
                     break
@@ -98,11 +98,11 @@ def getGamesAndOdds():
 
     return results
 
-def insertOrUpdateOpenGames(opengames):
-    for game in opengames:
+def insertOrUpdatetestgames(testgames):
+    for game in testgames:
         db_game_id=None
         try:
-            db_game_id=collection_opengames.find_one({"date":game.date,
+            db_game_id=collection_testgames.find_one({"date":game.date,
                                                       "hour":game.hour,
                                                       "league":game.league,
                                                       "home":game.home,
@@ -110,29 +110,29 @@ def insertOrUpdateOpenGames(opengames):
         except:
             pass
         if db_game_id is None:
-            collection_opengames.insert_one({"date":game.date,
-                                                 "hour":game.hour,
-                                                 "league":game.league,
-                                                 "home":game.home,
-                                                 "away":game.away,
-                                                 "homeFB": game.homeFBodd,
-                                                 "drawFB":game.drawFBodd,
-                                                 "awayFB":game.awayFBodd ,
-                                                 "home538":game.home538odd ,
-                                                 "draw538":game.draw538odd ,
-                                                 "away538":game.away538odd ,
-                                                 "quality":game.i538quality,
-                                                 "importance":game.i538importance ,
-                                                 "rating":game.i538rating ,
-                                                 "homeOdd":game.homeOdd ,
-                                                 "drawOdd":game.drawOdd ,
-                                                 "awayOdd":game.awayOdd ,
-                                                 "bet":game.bet ,
-                                                 "betOdd":game.betOdd ,
-                                                 "betOddP":game.betOddP
-                                                 })
+            collection_testgames.insert_one({"date":game.date,
+                                             "hour":game.hour,
+                                             "league":game.league,
+                                             "home":game.home,
+                                             "away":game.away,
+                                             "homeFB": game.homeFBodd,
+                                             "drawFB":game.drawFBodd,
+                                             "awayFB":game.awayFBodd ,
+                                             "home538":game.home538odd ,
+                                             "draw538":game.draw538odd ,
+                                             "away538":game.away538odd ,
+                                             "quality":game.i538quality,
+                                             "importance":game.i538importance ,
+                                             "rating":game.i538rating ,
+                                             "homeOdd":game.homeOdd ,
+                                             "drawOdd":game.drawOdd ,
+                                             "awayOdd":game.awayOdd ,
+                                             "bet":game.bet ,
+                                             "betOdd":game.betOdd ,
+                                             "betOddP":game.betOddP
+                                             })
         else:
-            collection_opengames.update_one({"_id":db_game_id},{"$set":{"date":game.date,
+            collection_testgames.update_one({"_id":db_game_id},{"$set":{"date":game.date,
                                                                         "hour":game.hour,
                                                                         "league":game.league,
                                                                         "home":game.home,

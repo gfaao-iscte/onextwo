@@ -20,7 +20,8 @@ class FiveThirtyEight:
         games = soup.findAll(class_='sortable-tr')
 
         for game in games:
-            if leagues_fte.__contains__(game.find(class_='league').text.strip()):
+            l=game.find(class_='league').text.strip()
+            if leagues_fte.__contains__(l):
                 home = game.find(class_='match').find(class_='match-top')
                 away = game.find(class_='match').find(class_='match-bottom')
                 league = game.find(class_='time-league').text
@@ -38,12 +39,28 @@ class FiveThirtyEight:
                     game = game.replace(home.find(class_='name').text.strip(), teams[home.find(class_='name').text.strip()])
                 except:
                         f.write(home.find(class_='name').text.strip()+"\n")
-
                 try:
                     game = game.replace(away.find(class_='name').text.strip(), teams[away.find(class_='name').text.strip()])
                 except:
                         f.write(away.find(class_='name').text.strip()+"\n")
-                game = game.replace(league, comps[league])
+                if league == "Bundesliga":
+                    if l == "BundesligaGermany":
+                        game = game.replace(league, "De1")
+                    else:
+                        game = game.replace(league, "At1")
+                elif league == "Premier League":
+                    if l == "Premier LeagueRussia":
+                        game = game.replace(league, "Ru1")
+                    else:
+                        game = game.replace(league, "EPL")
+                elif league == "Super League":
+                    if l == "Super LeagueGreece":
+                        game = game.replace(league, "Gr1")
+                    else:
+                        game = game.replace(league, "Ch1")
+
+                else:
+                    game = game.replace(league, comps[league])
                 results.append(game)
 
         f.close()

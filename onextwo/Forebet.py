@@ -29,7 +29,7 @@ class Forebet:
                                game.find(class_='fprc').findNext().findNext().findNext().text
                         results.append(game)
                 except:
-                    # print("Featured Macth:"+game.find(class_='homeTeam').text+"|"+game.find(class_='awayTeam').text)
+                    #print("Featured Macth:"+game.find(class_='homeTeam').text+"|"+game.find(class_='awayTeam').text)
                     pass
         return results
 
@@ -52,6 +52,8 @@ class Forebet:
                     game.result="2"
                 else:
                     game.result="X"
+                print(game.result)
+                print(game.bet)
                 if game.result == game.bet:
                     game.won="1"
                 else:
